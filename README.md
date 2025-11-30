@@ -343,19 +343,32 @@ def function_name(params):
 
 **Βήματα για Προσθήκη / Steps to Add:**
 
-1. Ανοίξτε το αρχείο `partA/knowledge_base/functions.txt`
-2. Προσθέστε τη νέα συνάρτηση με το παραπάνω format
-3. Τρέξτε την εντολή για regeneration των embeddings:
+1. **Επεξεργαστείτε το αρχείο / Edit the file:**
 
-```bash
-cd partA
-python -c "
-from rag_system import InMemoryRAG
-rag = InMemoryRAG('knowledge_base/functions.txt')
-rag.build_index()
-print('✅ Embeddings updated!')
-"
-```
+   ```bash
+   # Ανοίξτε το functions.txt / Open functions.txt
+   nano partA/knowledge_base/functions.txt
+   # ή / or
+   code partA/knowledge_base/functions.txt
+   ```
+
+2. **Προσθέστε τη νέα συνάρτηση / Add the new function** με το παραπάνω format
+
+3. **Αναδημιουργήστε τα embeddings / Rebuild embeddings:**
+
+   ```bash
+   # Απλή εντολή / Simple command
+   python rebuild_embeddings.py
+   
+   # Με προεπισκόπηση / With preview
+   python rebuild_embeddings.py --force
+   ```
+
+⚠️ **Σημαντικό / Important:**
+- Τα embeddings ΔΕΝ ενημερώνονται αυτόματα
+- Πρέπει να τρέξετε το `rebuild_embeddings.py` μετά από αλλαγές
+- Embeddings are NOT updated automatically
+- You must run `rebuild_embeddings.py` after making changes
 
 **Παράδειγμα / Example:**
 
