@@ -1,255 +1,210 @@
-# Python Function Knowledge Base & System Instructions
-# This file contains descriptions of common Python functions and algorithms
-# Used by the RAG system for code generation assistance
+# E-commerce Order Processing System Knowledge Base
 
-=== SYSTEM INSTRUCTIONS FOR CODE GENERATION ===
-
-You are an expert Python programmer with access to tools for generating Control Flow Graphs (CFG) 
-and Data Flow Graphs (DFG) from Python code.
-
-CODE GENERATION GUIDELINES:
-1. Generate clean, executable Python code with proper error handling
-2. Include type hints for all function parameters and return values
-3. Write comprehensive docstrings following Google style format
-4. Follow PEP 8 style guidelines
-5. Return ONLY valid Python code without markdown formatting (no ```python blocks)
-6. Use the function descriptions below as reference implementations
-
-AFTER GENERATING CODE:
-1. Automatically call the 'generate_cfg' tool to create Control Flow Graph for each function
-2. Automatically call the 'generate_dfg' tool to create Data Flow Graph for each function
-3. These tools will visualize the code structure and data dependencies
-
-AVAILABLE TOOLS:
-- generate_cfg(code: str, function_name: str) -> Creates control flow graph visualization
-- generate_dfg(code: str, function_name: str) -> Creates data flow graph visualization
-
-WORKFLOW:
-User Request → Generate Code → Call generate_cfg → Call generate_dfg → Return Results
-
-=== FUNCTION KNOWLEDGE BASE ===
+## Function: calculate_order_total
+### Description
+Calculates the final total cost of a customer's order by applying volume discounts and adding shipping fees based on the cart value.
+### Input
+* **subtotal (float):** The sum of prices of all items in the cart.
+* **is_member (boolean):** Indicates if the customer has a premium membership.
+### Process
+1. Initialize `discount_rate` to 0.0.
+2. Check if `subtotal` is greater than 100.0.
+   * If yes, set `discount_rate` to 0.10 (10% discount).
+   * Otherwise, check if `subtotal` is greater than 50.0.
+     * If yes, set `discount_rate` to 0.05 (5% discount).
+3. Check if `is_member` is True.
+   * If yes, add an additional 0.05 to the `discount_rate`.
+4. Calculate `discount_amount` as `subtotal` * `discount_rate`.
+5. Calculate `final_total` by subtracting `discount_amount` from `subtotal`.
+6. Check if `final_total` is less than 30.0.
+   * If yes, add 5.0 (shipping fee) to `final_total`.
+7. Return `final_total`.
+### Output
+* **final_total (float):** The final amount the customer must pay.
 
 ---
-Function: fibonacci
-Input: n (int) - The position in the Fibonacci sequence (0-indexed)
-Processing: Calculate the nth Fibonacci number using dynamic programming or recursion with memoization
-Output: int - The Fibonacci number at position n
-Description: The Fibonacci sequence starts with 0 and 1, and each subsequent number is the sum of the two preceding ones. Efficient implementations use memoization or iterative approaches to avoid redundant calculations.
-Example: fibonacci(5) returns 5 (sequence: 0, 1, 1, 2, 3, 5)
----
+
+## Function: validate_inventory_stock
+### Description
+Checks if there is enough stock to fulfill a customer's request and updates the inventory records accordingly.
+### Input
+* **requested_qty (integer):** The number of units the customer wants to buy.
+* **current_stock (integer):** The number of units currently available in the warehouse.
+### Process
+1. Initialize `status` string to "Pending".
+2. Check if `requested_qty` is less than or equal to 0.
+   * If yes, return "Invalid Quantity" immediately.
+3. Check if `requested_qty` is greater than `current_stock`.
+   * If yes, set `status` to "Out of Stock".
+   * Return `status`.
+4. Otherwise (if stock is sufficient), subtract `requested_qty` from `current_stock` to get `new_stock`.
+5. Check if `new_stock` is less than 5.
+   * If yes, set `status` to "Order Confirmed - Low Stock Warning".
+   * Otherwise, set `status` to "Order Confirmed".
+6. Return `status`.
+### Output
+* **status (string):** The result message of the inventory check.
 
 ---
-Function: factorial
-Input: n (int) - A non-negative integer
-Processing: Calculate n! = n × (n-1) × (n-2) × ... × 1
-Output: int - The factorial of n
-Description: The factorial of n is the product of all positive integers less than or equal to n. Special case: 0! = 1. Can be implemented recursively or iteratively.
-Example: factorial(5) returns 120
----
+
+## Function: process_refund_eligibility
+### Description
+Determines if a customer is eligible for a refund based on the number of days since purchase and the condition of the item.
+### Input
+* **days_since_purchase (integer):** How many days have passed since the order date.
+* **item_condition (string):** The state of the returned item ("new", "opened", "damaged").
+### Process
+1. Initialize `is_eligible` to False.
+2. Initialize `refund_percentage` to 0.0.
+3. Check if `days_since_purchase` is greater than 30.
+   * If yes, return a tuple (False, 0.0) immediately.
+4. Check the `item_condition`:
+   * If "new", set `is_eligible` to True and `refund_percentage` to 1.0 (100%).
+   * Else if "opened", set `is_eligible` to True and `refund_percentage` to 0.8 (80%).
+   * Else ("damaged"), set `is_eligible` to False.
+5. Return a tuple containing `is_eligible` and `refund_percentage`.
+### Output
+* **result (tuple):** Contains a boolean for eligibility and a float for the refund amount.
 
 ---
-Function: binary_search
-Input: arr (list) - A sorted array; target - The value to search for
-Processing: Use divide-and-conquer to find target in O(log n) time by repeatedly dividing the search interval in half
-Output: int - Index of target if found, -1 otherwise
-Description: Binary search requires a sorted array. It compares the target with the middle element and eliminates half of the search space in each iteration.
-Example: binary_search([1, 3, 5, 7, 9], 5) returns 2
----
+
+## Function: generate_shipping_label
+### Description
+Generates a shipping label code based on the destination region and package weight. It validates that the weight is within acceptable limits.
+### Input
+* **region_code (string):** The destination code (e.g., "NA", "EU", "ASIA").
+* **weight_kg (float):** The weight of the package in kilograms.
+### Process
+1. Check if `weight_kg` is greater than 20.0.
+   * If yes, return "Error: Overweight" immediately.
+2. Initialize `label_prefix` to empty string.
+3. Check `region_code`:
+   * If "NA", set `label_prefix` to "US-".
+   * Else if "EU", set `label_prefix` to "EURO-".
+   * Otherwise, set `label_prefix` to "INTL-".
+4. Convert `weight_kg` to a string format.
+5. Concatenate `label_prefix` with the string version of `weight_kg` to create `label`.
+6. Return `label`.
+### Output
+* **label (string):** The generated shipping code string.
 
 ---
-Function: quick_sort
-Input: arr (list) - An unsorted array of comparable elements
-Processing: Select a pivot, partition array into elements less than and greater than pivot, recursively sort partitions
-Output: list - Sorted array
-Description: QuickSort is a divide-and-conquer algorithm with O(n log n) average time complexity. Pivot selection strategies affect performance. Not stable by default.
-Example: quick_sort([3, 1, 4, 1, 5, 9, 2, 6]) returns [1, 1, 2, 3, 4, 5, 6, 9]
----
+
+## Function: batch_update_prices
+### Description
+Iterates through a list of product prices and applies a seasonal markup to all items, calculating the potential revenue increase.
+### Input
+* **price_list (list of floats):** Current prices of products in a category.
+* **markup_percentage (float):** The percentage to add to each price (e.g., 0.10 for 10%).
+### Process
+1. Initialize an empty list `new_prices`.
+2. Initialize `total_revenue_increase` to 0.0.
+3. Start a Loop to iterate through each `price` in `price_list`:
+   * Calculate `increase` as `price` * `markup_percentage`.
+   * Add `increase` to `total_revenue_increase`.
+   * Calculate `new_price` as `price` + `increase`.
+   * Append `new_price` to the `new_prices` list.
+4. Return a dictionary containing the `new_prices` list and the `total_revenue_increase`.
+### Output
+* **summary (dictionary):** Contains the updated list and the total projected gain.
 
 ---
-Function: merge_sort
-Input: arr (list) - An unsorted array
-Processing: Divide array into halves, recursively sort each half, merge sorted halves
-Output: list - Sorted array
-Description: MergeSort guarantees O(n log n) time complexity and is stable. Requires O(n) extra space for merging. Ideal for linked lists and external sorting.
-Example: merge_sort([3, 1, 4, 1, 5]) returns [1, 1, 3, 4, 5]
----
+
+## Function: calculate_loyalty_points
+### Description
+Calculates the number of reward points a customer earns from a purchase, applying multipliers based on their membership tier.
+### Input
+* **order_value (float):** The total amount spent in the current order.
+* **tier (string):** The customer's membership level ("Gold", "Silver", "Bronze").
+### Process
+1. Initialize `multiplier` to 1.0.
+2. Check the `tier`:
+   * If "Gold", set `multiplier` to 3.0.
+   * Else if "Silver", set `multiplier` to 2.0.
+   * Otherwise, set `multiplier` to 1.0.
+3. Calculate `points` as `order_value` * `multiplier`.
+4. Check if `order_value` is greater than 500.0.
+   * If yes, add 100 bonus points to `points`.
+5. Return the integer value of `points`.
+### Output
+* **points (integer):** The total loyalty points earned.
 
 ---
-Function: is_prime
-Input: n (int) - A positive integer to check
-Processing: Check if n has any divisors other than 1 and itself; only need to check up to sqrt(n)
-Output: bool - True if n is prime, False otherwise
-Description: A prime number is only divisible by 1 and itself. Numbers less than 2 are not prime. Optimization: check divisibility only up to square root of n.
-Example: is_prime(17) returns True
----
+
+## Function: evaluate_fraud_risk
+### Description
+Analyzes transaction details to assign a risk score. Used to flag potentially fraudulent orders for manual review.
+### Input
+* **is_international (boolean):** True if shipping address is in a different country than billing.
+* **order_total (float):** The total value of the transaction.
+* **failed_attempts (integer):** Number of failed payment attempts before success.
+### Process
+1. Initialize `risk_score` to 0.
+2. Check if `is_international` is True.
+   * If yes, add 30 to `risk_score`.
+3. Check if `order_total` is greater than 1000.0.
+   * If yes, add 20 to `risk_score`.
+4. Check if `failed_attempts` is greater than 2.
+   * If yes, add 40 to `risk_score`.
+5. Check if `risk_score` is greater than or equal to 50.
+   * If yes, return "High Risk".
+   * Otherwise, return "Low Risk".
+### Output
+* **risk_level (string):** The categorical assessment of the transaction.
 
 ---
-Function: gcd
-Input: a (int), b (int) - Two integers
-Processing: Use Euclidean algorithm: repeatedly replace larger number with remainder of division until one becomes 0
-Output: int - Greatest common divisor of a and b
-Description: The GCD is the largest positive integer that divides both numbers. Euclidean algorithm is efficient with O(log min(a,b)) time complexity.
-Example: gcd(48, 18) returns 6
----
+
+## Function: filter_promotional_items
+### Description
+Scans a list of items in a user's cart and extracts only the items that are currently valid for a "Summer Sale" promotion.
+### Input
+* **cart_items (list of dictionaries):** A list where each item has an "id", "name", and a boolean "is_promo".
+### Process
+1. Initialize an empty list `promo_list`.
+2. Start a Loop to iterate through each `item` in `cart_items`:
+   * Check if `item["is_promo"]` is True.
+   * If yes, append the `item["name"]` to `promo_list`.
+3. Check if `promo_list` is empty.
+   * If yes, return "No Promo Items Found".
+4. Return `promo_list`.
+### Output
+* **result (list or string):** A list of item names or a status message.
 
 ---
-Function: is_palindrome
-Input: s (str) - A string to check
-Processing: Compare string with its reverse, or use two-pointer technique from both ends
-Output: bool - True if palindrome, False otherwise
-Description: A palindrome reads the same forwards and backwards. Can ignore case and non-alphanumeric characters for flexible checking.
-Example: is_palindrome("racecar") returns True
----
+
+## Function: calculate_import_taxes
+### Description
+Estimates the import duties for an international shipment based on the destination country and product category.
+### Input
+* **destination (string):** The country code (e.g., "UK", "CA", "JP").
+* **category (string):** The type of product (e.g., "Electronics", "Clothing").
+* **value (float):** The declared value of the item.
+### Process
+1. Initialize `tax_rate` to 0.05 (base rate).
+2. Check if `destination` is "UK".
+   * If yes, add 0.15 to `tax_rate`.
+3. Check if `category` is "Electronics".
+   * If yes, add 0.05 to `tax_rate`.
+   * Else if `category` is "Clothing", add 0.10 to `tax_rate`.
+4. Calculate `total_tax` as `value` * `tax_rate`.
+5. Return `total_tax`.
+### Output
+* **total_tax (float):** The estimated tax amount.
 
 ---
-Function: reverse_string
-Input: s (str) - A string to reverse
-Processing: Use slicing [::-1], or two-pointer swap, or recursive approach
-Output: str - Reversed string
-Description: Python's slice notation s[::-1] is most Pythonic. In-place reversal requires converting to list for mutable operations.
-Example: reverse_string("hello") returns "olleh"
----
 
----
-Function: find_max
-Input: arr (list) - A non-empty array of comparable elements
-Processing: Iterate through array keeping track of maximum value seen so far
-Output: The maximum value in the array
-Description: Linear O(n) scan. Python has built-in max() function. Handle empty array case with error or sentinel value.
-Example: find_max([3, 1, 4, 1, 5, 9]) returns 9
----
-
----
-Function: find_min
-Input: arr (list) - A non-empty array of comparable elements
-Processing: Iterate through array keeping track of minimum value seen so far
-Output: The minimum value in the array
-Description: Linear O(n) scan. Python has built-in min() function. Handle empty array case appropriately.
-Example: find_min([3, 1, 4, 1, 5, 9]) returns 1
----
-
----
-Function: sum_array
-Input: arr (list) - An array of numbers
-Processing: Initialize sum to 0, iterate through array adding each element
-Output: Numeric sum of all elements
-Description: Python has built-in sum() function. Works with integers, floats, and other numeric types. Handle empty array (returns 0).
-Example: sum_array([1, 2, 3, 4, 5]) returns 15
----
-
----
-Function: remove_duplicates
-Input: arr (list) - A list that may contain duplicate elements
-Processing: Use set for O(n) deduplication, or maintain seen set while preserving order
-Output: list - List with duplicates removed
-Description: Using set() removes duplicates but loses order. To preserve order, iterate with a seen set and build result list.
-Example: remove_duplicates([1, 2, 2, 3, 1, 4]) returns [1, 2, 3, 4]
----
-
----
-Function: transpose_matrix
-Input: matrix (list of lists) - A 2D matrix
-Processing: Swap rows and columns: new[i][j] = old[j][i]
-Output: list of lists - Transposed matrix
-Description: For an m×n matrix, transpose produces an n×m matrix. Can use list comprehension or zip(*matrix) in Python.
-Example: transpose_matrix([[1,2,3],[4,5,6]]) returns [[1,4],[2,5],[3,6]]
----
-
----
-Function: flatten_list
-Input: nested_list (list) - A nested list structure of arbitrary depth
-Processing: Recursively traverse nested structure, collecting leaf elements into flat list
-Output: list - Flattened single-level list
-Description: Can be implemented recursively or iteratively with a stack. Handle mixed types (lists and non-lists).
-Example: flatten_list([1, [2, [3, 4], 5]]) returns [1, 2, 3, 4, 5]
----
-
----
-Function: is_anagram
-Input: s1 (str), s2 (str) - Two strings to compare
-Processing: Sort both strings and compare, or count character frequencies
-Output: bool - True if anagrams, False otherwise
-Description: Anagrams contain same characters in different order. Case-insensitive comparison common. Frequency counting is O(n), sorting is O(n log n).
-Example: is_anagram("listen", "silent") returns True
----
-
----
-Function: calculate_mean
-Input: numbers (list) - A non-empty list of numeric values
-Processing: Sum all numbers and divide by count
-Output: float - The arithmetic mean (average)
-Description: Mean = sum / count. Handle empty list with error. For large datasets, consider numerical stability.
-Example: calculate_mean([1, 2, 3, 4, 5]) returns 3.0
----
-
----
-Function: calculate_median
-Input: numbers (list) - A list of numeric values
-Processing: Sort the list; if odd length, return middle element; if even, return average of two middle elements
-Output: float - The median value
-Description: Median is the middle value in sorted data. More robust to outliers than mean. Requires O(n log n) sorting.
-Example: calculate_median([1, 3, 5, 7, 9]) returns 5.0
----
-
----
-Function: find_duplicates
-Input: arr (list) - A list to check for duplicates
-Processing: Track seen elements using set; when element seen twice, add to duplicates set
-Output: list - List of duplicate elements (each unique duplicate listed once)
-Description: Use hash set for O(n) time complexity. Returns each duplicate value once, not all occurrences.
-Example: find_duplicates([1, 2, 3, 2, 4, 3, 5]) returns [2, 3]
----
-
----
-Function: two_sum
-Input: arr (list) - Array of integers; target (int) - Target sum
-Processing: Use hash map to store complements; for each number, check if (target - number) exists in map
-Output: tuple - Indices (i, j) of two numbers that sum to target, or None
-Description: Single-pass O(n) solution using hash map. Returns first valid pair found. Assumes exactly one solution exists.
-Example: two_sum([2, 7, 11, 15], 9) returns (0, 1)
----
-
----
-Function: dfs
-Input: graph (dict) - Adjacency list representation; start - Starting node
-Processing: Use recursion or explicit stack; mark nodes as visited; explore each unvisited neighbor
-Output: list - List of nodes in DFS traversal order
-Description: Depth-First Search explores as far as possible along each branch before backtracking. O(V + E) time complexity.
-Example: dfs({'A': ['B', 'C'], 'B': ['D'], 'C': [], 'D': []}, 'A') returns ['A', 'B', 'D', 'C']
----
-
----
-Function: bfs
-Input: graph (dict) - Adjacency list representation; start - Starting node
-Processing: Use queue (collections.deque); mark nodes as visited; explore all neighbors at current level before going deeper
-Output: list - List of nodes in BFS traversal order
-Description: Breadth-First Search explores level by level. Finds shortest path in unweighted graphs. O(V + E) time complexity.
-Example: bfs({'A': ['B', 'C'], 'B': ['D'], 'C': [], 'D': []}, 'A') returns ['A', 'B', 'C', 'D']
----
-
----
-Function: longest_common_subsequence
-Input: s1 (str), s2 (str) - Two strings
-Processing: Use dynamic programming; build 2D table where dp[i][j] = LCS length of s1[:i] and s2[:j]
-Output: int - Length of longest common subsequence
-Description: LCS finds longest subsequence common to both strings (not necessarily contiguous). Classic DP problem with O(mn) complexity.
-Example: lcs("ABCDGH", "AEDFHR") returns 3 (ADH)
----
-
----
-Function: knapsack
-Input: weights (list), values (list), capacity (int) - Item weights, values, and knapsack capacity
-Processing: Use dynamic programming; dp[i][w] = max value using first i items with weight limit w
-Output: int - Maximum value achievable
-Description: 0/1 Knapsack problem solved with DP in O(n×capacity) time. Each item can be taken once or not at all.
-Example: knapsack([1,2,3], [10,15,40], 6) returns 65
----
-
----
-Function: dijkstra
-Input: graph (dict) - Weighted adjacency list; start - Starting node
-Processing: Use priority queue; maintain distances to all nodes; greedily select closest unvisited node
-Output: dict - Shortest distances from start to all reachable nodes
-Description: Dijkstra's algorithm finds shortest paths in weighted graphs with non-negative weights. O((V+E) log V) with priority queue.
-Example: dijkstra({'A': [('B',1),('C',4)], 'B': [('C',2)], 'C': []}, 'A') returns {'A':0, 'B':1, 'C':3}
----
+## Function: check_cart_weight_limit
+### Description
+Iterates through all items in a cart to calculate total weight and ensures it does not exceed the carrier's maximum limit.
+### Input
+* **item_weights (list of floats):** A list of weights for every item in the cart.
+* **max_limit (float):** The maximum weight allowed by the selected shipping carrier.
+### Process
+1. Initialize `total_weight` to 0.0.
+2. Start a Loop to iterate through each `w` in `item_weights`:
+   * Add `w` to `total_weight`.
+3. Check if `total_weight` is greater than `max_limit`.
+   * If yes, return False.
+   * Otherwise, return True.
+### Output
+* **is_allowed (boolean):** True if shipment is within limits, False if overweight.

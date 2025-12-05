@@ -34,11 +34,4 @@ ENV/
 # Project-specific: Generated artifacts and sessions
 sessions/*
 !sessions/.gitkeep
-generated_artifacts/*
-!generated_artifacts/.gitkeep
-!generated_artifacts/cfg/
-!generated_artifacts/dfg/
-generated_artifacts/cfg/*
-!generated_artifacts/cfg/.gitkeep
-generated_artifacts/dfg/*
-!generated_artifacts/dfg/.gitkeep
+diagrams/

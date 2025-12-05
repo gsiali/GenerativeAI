@@ -1,792 +1,573 @@
-# AI Code Assistant - Complete System
+# 🐍 Python Code Assistant | Βοηθός Κώδικα Python
 
-## Overview
-A comprehensive AI-powered chatbot system for Python code generation and optimization, integrating multiple static analysis tools and natural language processing.
+A comprehensive AI-powered Python code generation and optimization system built with OpenAI GPT models, featuring RAG (Retrieval-Augmented Generation), Control Flow Graph (CFG) and Data Flow Graph (DFG) visualization, and intelligent code optimization.
 
-## System Components
+Ένα ολοκληρωμένο σύστημα δημιουργίας και βελτιστοποίησης κώδικα Python με τεχνητή νοημοσύνη, που χρησιμοποιεί μοντέλα OpenAI GPT, με χαρακτηριστικά RAG (Retrieval-Augmented Generation), οπτικοποίηση Control Flow Graph (CFG) και Data Flow Graph (DFG), και έξυπνη βελτιστοποίηση κώδικα.
 
-### Part A: Code Generation Pipeline
-1. **RAG System** (`partA/rag_system.py`)
-   - In-memory vector search using OpenAI embeddings
-   - Retrieves relevant functions from knowledge base
-   - Uses cosine similarity for semantic search
+---
 
-2. **Code Generator** (`partA/code_generator.py`)
-   - Generates Python code from natural language descriptions
-   - Uses OpenAI o4-mini model
-   - Validates generated code with AST parsing
-   - Supports conversational refinement
+## 📋 Table of Contents | Πίνακας Περιεχομένων
 
-3. **CFG Generator** (`partA/cfg_generator.py`)
-   - Creates Control Flow Graphs using staticfg
-   - Visualizes program flow with graphviz
-   - Generates PNG images for each function
+- [Features | Χαρακτηριστικά](#features--χαρακτηριστικά)
+- [Project Structure | Δομή Έργου](#project-structure--δομή-έργου)
+- [Setup Instructions | Οδηγίες Εγκατάστασης](#setup-instructions--οδηγίες-εγκατάστασης)
+- [How to Run | Πώς να Εκτελέσετε](#how-to-run--πώς-να-εκτελέσετε)
+- [Architecture Overview | Επισκόπηση Αρχιτεκτονικής](#architecture-overview--επισκόπηση-αρχιτεκτονικής)
+- [Component Details | Λεπτομέρειες Στοιχείων](#component-details--λεπτομέρειες-στοιχείων)
+- [How It Works | Πώς Λειτουργεί](#how-it-works--πώς-λειτουργεί)
+- [Configuration | Διαμόρφωση](#configuration--διαμόρφωση)
 
-4. **DFG Generator** (`partA/dfg_generator.py`)
-   - Creates Data Flow Graphs using NetworkX
-   - Tracks variable definitions and uses
-   - Color-coded visualization (parameters, definitions, uses, returns)
+---
 
-### Part B: Code Optimization Pipeline
-1. **Variable Renamer** (`partB/var_renamer.py`)
-   - Type-based variable renaming (IntVar_1, StrVar_1, etc.)
-   - AST-based type inference from annotations and values
-   - Transforms all occurrences consistently
+## ✨ Features | Χαρακτηριστικά
 
-2. **Nested IF Detector** (`partB/if_detector.py`)
-   - Detects deeply nested IF statements (>3 levels)
-   - Annotates code with warning comments
-   - Provides refactoring recommendations
+### Part A: Code Generation Chatbot | Μέρος Α: Chatbot Δημιουργίας Κώδικα
 
-### Main Application (`main.py`)
-- **Unified orchestration** of Part A and Part B
-- **Session management** with conversation history
-- **CLI interface** for interactive use
-- **File I/O** for code and session persistence
+**English:**
 
-## Χρήση / Usage
+- **Intelligent Code Generation**: Generate Python functions based on natural language descriptions
+- **RAG-Enhanced Responses**: Retrieves relevant specifications from a knowledge base using semantic search
+- **Visual Diagrams**: Automatically generates Control Flow Graphs (CFG) and Data Flow Graphs (DFG)
+- **Conversation History**: Maintains context across multiple interactions
+- **Knowledge Base Integration**: Uses embedded specifications to generate accurate, specification-compliant code
 
-### Εκκίνηση της Εφαρμογής / Starting the Application
+**Ελληνικά:**
 
-#### 1. Εγκατάσταση Εξαρτήσεων / Install Dependencies
+- **Έξυπνη Δημιουργία Κώδικα**: Δημιουργία συναρτήσεων Python βασισμένη σε περιγραφές φυσικής γλώσσας
+- **Βελτιωμένες Απαντήσεις με RAG**: Ανακτά σχετικές προδιαγραφές από βάση γνώσης χρησιμοποιώντας σημασιολογική αναζήτηση
+- **Οπτικά Διαγράμματα**: Αυτόματη δημιουργία Διαγραμμάτων Ροής Ελέγχου (CFG) και Διαγραμμάτων Ροής Δεδομένων (DFG)
+- **Ιστορικό Συνομιλίας**: Διατηρεί το πλαίσιο σε πολλαπλές αλληλεπιδράσεις
+- **Ενσωμάτωση Βάσης Γνώσης**: Χρησιμοποιεί ενσωματωμένες προδιαγραφές για τη δημιουργία ακριβούς κώδικα συμβατού με τις προδιαγραφές
+
+### Part B: Code Optimizer | Μέρος Β: Βελτιστοποιητής Κώδικα
+
+**English:**
+
+- **Nested IF Detection**: Identifies and warns about deeply nested conditional statements
+- **LLM-Powered Optimization**: Uses GPT models to suggest cleaner, more readable code
+- **PDF-Based System Prompt**: Loads optimization instructions from a PDF file
+- **Side-by-Side Comparison**: View original and optimized code simultaneously
+
+**Ελληνικά:**
+
+- **Ανίχνευση Εμφωλευμένων IF**: Εντοπίζει και προειδοποιεί για βαθιά εμφωλευμένες δηλώσεις συνθηκών
+- **Βελτιστοποίηση με LLM**: Χρησιμοποιεί μοντέλα GPT για να προτείνει καθαρότερο, πιο αναγνώσιμο κώδικα
+- **Οδηγίες από PDF**: Φορτώνει οδηγίες βελτιστοποίησης από αρχείο PDF
+- **Σύγκριση Δίπλα-Δίπλα**: Προβολή του αρχικού και του βελτιστοποιημένου κώδικα ταυτόχρονα
+
+---
+
+## 📁 Project Structure | Δομή Έργου
+
+**English:** Project organized into two main parts - Part A for code generation with RAG and Part B for code optimization.
+
+**Ελληνικά:** Το έργο οργανώνεται σε δύο κύρια μέρη - Μέρος Α για δημιουργία κώδικα με RAG και Μέρος Β για βελτιστοποίηση κώδικα.
+
+```text
+GenerativeAI/
+├── streamlit_app.py              # Main web application entry point
+├── requirements.txt              # Python dependencies
+├── .env                          # Environment variables (API keys)
+├── .gitignore                    # Git ignore rules
+│
+├── partA/                        # Code Generation Module
+│   ├── llm_agent.py             # LLM agent with function calling
+│   ├── rag_system.py            # RAG system with embeddings
+│   └── knowledge_base/
+│       ├── functions.txt        # Knowledge base specifications
+│       └── embeddings.json      # Cached embeddings
+│
+├── partB/                        # Code Optimization Module
+│   ├── optimizer.py             # Code optimizer
+│   ├── systemPrompt.pdf         # Optimization instructions
+│   ├── systemPrompt.txt         # Source text for PDF
+│   └── create_system_prompt_pdf.py  # PDF generator
+│
+├── diagrams/                     # Generated CFG/DFG diagrams (auto-created)
+└── sessions/                     # Conversation sessions (optional)
+```
+
+---
+
+## 🚀 Setup Instructions | Οδηγίες Εγκατάστασης
+
+### Prerequisites | Προαπαιτούμενα
+
+**English:**
+
+- Python 3.8 or higher
+- OpenAI API key
+- Graphviz system library (for diagram rendering)
+
+**Ελληνικά:**
+
+- Python 3.8 ή νεότερη έκδοση
+- Κλειδί API του OpenAI
+- Βιβλιοθήκη συστήματος Graphviz (για απόδοση διαγραμμάτων)
+
+### 1. Clone the Repository | Κλωνοποίηση του Αποθετηρίου
 
 ```bash
-# Δημιουργία εικονικού περιβάλλοντος / Create virtual environment
+git clone <repository-url>
+cd GenerativeAI
+```
+
+### 2. Install Graphviz | Εγκατάσταση Graphviz (System Dependency)
+
+**macOS:**
+
+```bash
+brew install graphviz
+```
+
+**Ubuntu/Debian:**
+
+```bash
+sudo apt-get install graphviz
+```
+
+**Windows:**
+
+Download and install from [graphviz.org](https://graphviz.org/download/)
+
+Κατεβάστε και εγκαταστήστε από [graphviz.org](https://graphviz.org/download/)
+
+### 3. Create Virtual Environment | Δημιουργία Εικονικού Περιβάλλοντος
+
+```bash
 python -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+```
 
-# Ενεργοποίηση / Activate
-source .venv/bin/activate  # macOS/Linux
-# ή / or
-.venv\Scripts\activate     # Windows
+### 4. Install Python Dependencies | Εγκατάσταση Εξαρτήσεων Python
 
-# Εγκατάσταση πακέτων / Install packages
+```bash
 pip install -r requirements.txt
 ```
 
-#### 2. Διαμόρφωση API Key / API Key Configuration
+### 5. Configure Environment Variables | Διαμόρφωση Μεταβλητών Περιβάλλοντος
 
-**Απαιτείται OpenAI API Key / OpenAI API Key Required**
+**English:** Create a `.env` file in the project root:
 
-Δημιουργήστε αρχείο `.env` στον root φάκελο του project:
-
-Create a `.env` file in the project root directory:
+**Ελληνικά:** Δημιουργήστε ένα αρχείο `.env` στη ρίζα του έργου:
 
 ```bash
-# Στον φάκελο GenerativeAI/ δημιουργήστε το αρχείο:
-# In the GenerativeAI/ folder, create the file:
-touch .env
+OPENAI_API_KEY=your_openai_api_key_here
 ```
 
-**Προσθέστε το API key σας / Add your API key:**
+### 6. Generate System Prompt PDF | Δημιουργία PDF Οδηγιών Συστήματος (Part B)
 
 ```bash
-OPENAI_API_KEY=sk-proj-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+python partB/create_system_prompt_pdf.py
 ```
 
-⚠️ **Σημαντικό / Important:**
-- Αντικαταστήστε το `sk-proj-xxx...` με το πραγματικό σας OpenAI API key
-- Το `.env` αρχείο είναι ήδη στο `.gitignore` (δεν θα ανέβει στο git)
-- Μην μοιραστείτε ποτέ το API key σας δημόσια
-- Replace `sk-proj-xxx...` with your actual OpenAI API key
-- The `.env` file is already in `.gitignore` (won't be committed to git)
-- Never share your API key publicly
+---
 
-**Πώς να πάρετε API Key / How to get an API Key:**
+## ▶️ How to Run | Πώς να Εκτελέσετε
 
-1. Πηγαίνετε στο: https://platform.openai.com/api-keys
-2. Συνδεθείτε ή δημιουργήστε λογαριασμό / Sign in or create an account
-3. Δημιουργήστε νέο API key / Create a new API key
-4. Αντιγράψτε το key και προσθέστε το στο `.env` / Copy the key and add it to `.env`
-
-#### 3. Εκτέλεση της Εφαρμογής / Running the Application
-
-**Εκκίνηση Streamlit UI / Start Streamlit UI:**
+### Start the Application | Εκκίνηση της Εφαρμογής
 
 ```bash
-# Βεβαιωθείτε ότι είστε στον φάκελο του project
-# Make sure you're in the project folder
-cd /path/to/GenerativeAI
-
-# Ενεργοποιήστε το virtual environment
-# Activate the virtual environment
-source .venv/bin/activate  # macOS/Linux
-# ή / or
-.venv\Scripts\activate     # Windows
-
-# Εκτελέστε την εφαρμογή / Run the application
 streamlit run streamlit_app.py
 ```
 
-**Επιτυχής Εκκίνηση / Successful Startup:**
+**English:** The application will open in your default browser at `http://localhost:8501`
 
-```text
-  You can now view your Streamlit app in your browser.
+**Ελληνικά:** Η εφαρμογή θα ανοίξει στο προεπιλεγμένο πρόγραμμα περιήγησης στη διεύθυνση `http://localhost:8501`
 
-  Local URL: http://localhost:8501
-  Network URL: http://192.168.x.x:8501
-```
-
-🌐 **Ανοίξτε το browser σας και πηγαίνετε στο / Open your browser and go to:**
-
-```
-http://localhost:8501
-```
-
-**Διακοπή της Εφαρμογής / Stopping the Application:**
-
-Πατήστε `Ctrl+C` στο terminal / Press `Ctrl+C` in the terminal
-
-#### 4. Καθαρισμός Αρχείων (Προαιρετικό) / Cleanup Files (Optional)
-
-**Διαγραφή παλαιών sessions και generated artifacts / Delete old sessions and generated artifacts:**
+### Restart the Application | Επανεκκίνηση της Εφαρμογής
 
 ```bash
-# Προεπισκόπηση (δεν διαγράφει τίποτα) / Preview (doesn't delete anything)
-python cleanup.py --dry-run
-
-# Διαγραφή όλων (sessions + artifacts) / Delete all (sessions + artifacts)
-python cleanup.py
-
-# Διαγραφή μόνο sessions / Delete only sessions
-python cleanup.py --sessions
-
-# Διαγραφή μόνο artifacts / Delete only artifacts  
-python cleanup.py --artifacts
+pkill -f streamlit; sleep 1; streamlit run streamlit_app.py
 ```
 
-⚠️ **Σημείωση / Note:**
-- Οι φάκελοι διατηρούνται με .gitkeep αρχεία
-- Folders are preserved with .gitkeep files
-- Μπορείτε να τρέξετε ξανά οποτεδήποτε
-- You can run this anytime to clean up old files
-
 ---
 
-### Οδηγίες Χρήσης / User Guide
+## 🏗️ Architecture Overview | Επισκόπηση Αρχιτεκτονικής
 
-#### 📝 Μέρος Α: Δημιουργία Κώδικα / Part A: Code Generation
+**English:** The system consists of a Streamlit web interface that orchestrates two main components: Part A (code generation with RAG) and Part B (code optimization).
 
-1. **Μετάβαση στην καρτέλα "Code Generation"**
-2. **Εισάγετε περιγραφή στη φυσική γλώσσα** (ελληνικά ή αγγλικά)
-   - Παράδειγμα: "Δημιούργησε συνάρτηση για τον υπολογισμό του παραγοντικού"
-   - Example: "Create a function to calculate factorial"
-3. **Πατήστε "Generate Code"**
-4. **Αποτελέσματα:**
-   - Παραγόμενος κώδικας Python με documentation
-   - Control Flow Graph (CFG) - διάγραμμα ροής ελέγχου
-   - Data Flow Graph (DFG) - διάγραμμα ροής δεδομένων
-   - Όλα τα αρχεία αποθηκεύονται με timestamps
-
-**Χαρακτηριστικά:**
-
-- ✅ Χρήση RAG (Retrieval-Augmented Generation) για καλύτερο context
-- ✅ Αυτόματη δημιουργία CFG και DFG
-- ✅ Επικύρωση κώδικα με AST parsing
-- ✅ Ιστορικό συνομιλιών
-
-#### 🔧 Μέρος Β: Βελτιστοποίηση Κώδικα / Part B: Code Optimization
-
-1. **Μετάβαση στην καρτέλα "Optimization"**
-2. **Εισάγετε τον κώδικα Python:**
-   - Επικολλήστε απευθείας στο text area
-   - Ή ανεβάστε αρχείο `.py`
-3. **Πατήστε "Optimize Code"**
-4. **Αποτελέσματα:**
-   - Βελτιστοποιημένος κώδικας με μετονομασίες μεταβλητών
-   - Ανίχνευση υπερβολικά φωλιασμένων IF statements
-   - Σχόλια με προειδοποιήσεις (warnings)
-   - Αναλυτική αναφορά βελτιστοποιήσεων
-
-**Κανόνες Βελτιστοποίησης:**
-
-- 🔤 **Μετονομασία μεταβλητών:** IntVar_1, StrVar_2, ListVar_1, κλπ.
-- ⚠️ **Ανίχνευση nested IF:** Προειδοποίηση όταν το βάθος φωλιάσματος > 3
-- 📝 **Σχολιασμός:** Αυτόματη προσθήκη warning comments στον κώδικα
-
-#### 📊 Ιστορικό / History
-
-1. **Μετάβαση στην καρτέλα "History"**
-2. **Προβολή:**
-   - Session ID της τρέχουσας συνεδρίας
-   - Όλες οι προηγούμενες αλληλεπιδράσεις
-   - Παραγόμενα αρχεία και artifacts
-3. **Διαγραφή ιστορικού:** Πατήστε "Clear History"
-
----
-
-### Δομή Εξόδου / Output Structure
+**Ελληνικά:** Το σύστημα αποτελείται από μια διεπαφή ιστού Streamlit που ενορχηστρώνει δύο κύρια στοιχεία: Μέρος Α (δημιουργία κώδικα με RAG) και Μέρος Β (βελτιστοποίηση κώδικα).
 
 ```text
-generated_artifacts/
-├── cfg/                      # Control Flow Graphs
-│   └── function_name_YYYYMMDD_HHMMSS.png
-└── dfg/                      # Data Flow Graphs
-    └── function_name_YYYYMMDD_HHMMSS.png
-
-sessions/
-└── session_YYYYMMDD_HHMMSS_XXXXXX.json  # Ιστορικό συνεδρίας
+┌─────────────────────────────────────────────────────────┐
+│                    Streamlit Web App                    │
+│                  (streamlit_app.py)                     │
+└──────────────┬──────────────────────┬───────────────────┘
+               │                      │
+               ▼                      ▼
+    ┌──────────────────┐   ┌──────────────────┐
+    │   Part A: Chat   │   │ Part B: Optimizer│
+    │   (llm_agent.py) │   │  (optimizer.py)  │
+    └────────┬─────────┘   └──────────────────┘
+             │
+             ▼
+    ┌──────────────────┐
+    │   RAG System     │
+    │ (rag_system.py)  │
+    └────────┬─────────┘
+             │
+             ▼
+    ┌──────────────────┐
+    │  Knowledge Base  │
+    │  (functions.txt) │
+    └──────────────────┘
 ```
 
 ---
 
-### Παραδείγματα Χρήσης / Usage Examples
+## 🔍 Component Details | Λεπτομέρειες Στοιχείων
 
-#### Παράδειγμα 1: Δημιουργία Κώδικα
+### Part A: Code Generation Chatbot | Μέρος Α: Chatbot Δημιουργίας Κώδικα
 
-**Είσοδος (Input):**
+#### **LLMAgent (`partA/llm_agent.py`)**
 
-```text
-Δημιούργησε συνάρτηση για να ελέγχει αν ένας αριθμός είναι πρώτος
-```
+**English Purpose:** Orchestrates code generation with structured outputs using OpenAI function calling.
 
-**Έξοδος (Output):**
+**Ελληνικός Σκοπός:** Ενορχηστρώνει τη δημιουργία κώδικα με δομημένες εξόδους χρησιμοποιώντας κλήσεις συναρτήσεων του OpenAI.
 
-- Python function με πλήρη documentation
-- CFG που δείχνει τη ροή του προγράμματος
-- DFG που δείχνει τις εξαρτήσεις των μεταβλητών
+**Key Methods:**
 
-#### Παράδειγμα 2: Βελτιστοποίηση Κώδικα
+1. **`__init__(model="o4-mini")`**
+   - Initializes OpenAI client
+   - Creates `diagrams/` directory for CFG/DFG outputs
+   - Initializes RAG system
+   - Defines function schema for structured responses
 
-**Είσοδος (Input):**
-
-```python
-def process(a, b, c):
-    if a > 0:
-        if b > 0:
-            if c > 0:
-                if a > b:
-                    return a
-    return 0
-```
-
-**Έξοδος (Output):**
-
-```python
-def process(IntVar_1, IntVar_2, IntVar_3):
-    if IntVar_1 > 0:
-        if IntVar_2 > 0:
-            if IntVar_3 > 0:
-                # WARNING: Nested IF depth = 4 (exceeds limit of 3)
-                if IntVar_1 > IntVar_2:
-                    return IntVar_1
-    return 0
-```
-
----
-
-### CLI Mode (Προαιρετικό / Optional)
-
-```bash
-python main.py cli
-```
-
-Options:
-
-1. Generate Code (Part A) - Enter natural language description
-2. Optimize Code (Part B) - Paste code, end with 'END'
-3. Exit
-
----
-
-## Πως Λειτουργεί το Σύστημα / How the System Works
-
-### 📚 Μέρος Α: Αρχιτεκτονική Δημιουργίας Κώδικα / Part A: Code Generation Architecture
-
-#### Ροή Εργασιών / Workflow
-
-1. **Είσοδος Χρήστη / User Input**
-   - Ο χρήστης εισάγει περιγραφή σε φυσική γλώσσα
-   - User enters natural language description
-
-2. **RAG Retrieval (Ανάκτηση Πληροφοριών)**
-   - Το σύστημα μετατρέπει την ερώτηση σε embedding vector
-   - Αναζητά τα 3 πιο σχετικά παραδείγματα από τη βάση γνώσης
-   - Χρησιμοποιεί cosine similarity για ταίριασμα
-   - System converts query to embedding vector
-   - Searches for 3 most relevant examples from knowledge base
-   - Uses cosine similarity for matching
-
-3. **LLM Code Generation (Δημιουργία Κώδικα)**
-   - Το LLM λαμβάνει: user prompt + RAG context + system instructions
-   - Παράγει Python κώδικα με documentation
-   - Επικυρώνει τον κώδικα με AST parsing
-   - LLM receives: user prompt + RAG context + system instructions
-   - Generates Python code with documentation
-   - Validates code with AST parsing
-
-4. **Automatic Visualization (Αυτόματη Απεικόνιση)**
-   - Το LLM καλεί αυτόματα τα tools: `generate_cfg` και `generate_dfg`
-   - Δημιουργούνται διαγράμματα ροής (CFG) και δεδομένων (DFG)
-   - Όλα αποθηκεύονται με timestamps
-   - LLM automatically calls tools: `generate_cfg` and `generate_dfg`
-   - Flow (CFG) and data (DFG) diagrams are generated
-   - All saved with timestamps
-
-#### Πού να Προσθέσετε RAG Πληροφορίες / Where to Add RAG Information
-
-**Αρχείο / File:** `partA/knowledge_base/functions.txt`
-
-**Μορφή / Format:**
-
-```python
-# Function: function_name
-def function_name(params):
-    """
-    Description of what the function does
-    """
-    # implementation
-    return result
-
-# Separator
----
-```
-
-**Βήματα για Προσθήκη / Steps to Add:**
-
-1. **Επεξεργαστείτε το αρχείο / Edit the file:**
-
-   ```bash
-   # Ανοίξτε το functions.txt / Open functions.txt
-   nano partA/knowledge_base/functions.txt
-   # ή / or
-   code partA/knowledge_base/functions.txt
-   ```
-
-2. **Προσθέστε τη νέα συνάρτηση / Add the new function** με το παραπάνω format
-
-3. **Αναδημιουργήστε τα embeddings / Rebuild embeddings:**
-
-   ```bash
-   # Απλή εντολή / Simple command
-   python rebuild_embeddings.py
+2. **`chat(user_message, conversation_history) -> Dict`**
+   - **Step 1**: Retrieves relevant context from knowledge base using RAG
+   - **Step 2**: Builds conversation messages with system prompt
+   - **Step 3**: Calls OpenAI API with forced function calling (`tool_choice`)
+   - **Step 4**: Extracts structured arguments from LLM response
+   - **Step 5**: Processes response and renders diagrams
    
-   # Με προεπισκόπηση / With preview
-   python rebuild_embeddings.py --force
-   ```
+   **Returns**: Dictionary with `chat_reply`, `generated_code`, `cfg_path`, `dfg_path`
 
-⚠️ **Σημαντικό / Important:**
-- Τα embeddings ΔΕΝ ενημερώνονται αυτόματα
-- Πρέπει να τρέξετε το `rebuild_embeddings.py` μετά από αλλαγές
-- Embeddings are NOT updated automatically
-- You must run `rebuild_embeddings.py` after making changes
+3. **`_build_system_prompt(rag_context) -> str`**
+   - Formats RAG context with similarity scores
+   - Instructs LLM to follow specifications if score > 0.5
+   - Returns system prompt with embedded context
 
-**Παράδειγμα / Example:**
+4. **`_render_diagram(dot_string, diagram_type) -> str`**
+   - Converts DOT notation to PNG using Graphviz
+   - Saves to `diagrams/` with timestamp
+   - Returns file path for Streamlit display
 
+5. **`_process_llm_response(args) -> Dict`**
+   - Extracts code and DOT strings from function call
+   - Renders CFG and DFG diagrams
+   - Returns structured result dictionary
+
+**Function Calling Schema:**
 ```python
-# Function: bubble_sort
-def bubble_sort(arr: list) -> list:
-    """
-    Sorts a list using bubble sort algorithm.
-    
-    Args:
-        arr: List of comparable elements
-        
-    Returns:
-        Sorted list
-    """
-    n = len(arr)
-    for i in range(n):
-        for j in range(0, n - i - 1):
-            if arr[j] > arr[j + 1]:
-                arr[j], arr[j + 1] = arr[j + 1], arr[j]
-    return arr
----
-```
-
-#### Πώς Λειτουργεί το RAG / How RAG Works
-
-1. **Indexing (Δημιουργία Ευρετηρίου):**
-   - Κάθε συνάρτηση στο `functions.txt` μετατρέπεται σε vector με OpenAI embeddings
-   - Τα vectors αποθηκεύονται στο `embeddings.json`
-   - Each function in `functions.txt` is converted to vector with OpenAI embeddings
-   - Vectors stored in `embeddings.json`
-
-2. **Retrieval (Ανάκτηση):**
-   - User query → embedding vector
-   - Υπολογισμός cosine similarity με όλα τα stored vectors
-   - Επιστροφή των top-3 πιο παρόμοιων συναρτήσεων
-   - Calculate cosine similarity with all stored vectors
-   - Return top-3 most similar functions
-
-3. **Augmentation (Εμπλουτισμός):**
-   - Τα retrieved examples προστίθενται στο LLM prompt
-   - Το LLM χρησιμοποιεί αυτά ως context για καλύτερη δημιουργία κώδικα
-   - Retrieved examples added to LLM prompt
-   - LLM uses them as context for better code generation
-
----
-
-### 🔧 Μέρος Β: Αρχιτεκτονική Βελτιστοποίησης / Part B: Optimization Architecture
-
-#### Ροή Εργασιών / Workflow
-
-1. **Είσοδος Κώδικα / Code Input**
-   - Ο χρήστης εισάγει Python κώδικα (paste ή upload .py)
-   - User enters Python code (paste or upload .py)
-
-2. **System Prompt Loading (Φόρτωση Οδηγιών)**
-   - Το σύστημα διαβάζει το `partB/systemPrompt.pdf`
-   - Περιέχει κανόνες για μετονομασίες και nested IF detection
-   - System reads `partB/systemPrompt.pdf`
-   - Contains rules for renaming and nested IF detection
-
-3. **LLM Optimization (Βελτιστοποίηση με LLM)**
-   - LLM λαμβάνει: system prompt + user code
-   - Εφαρμόζει κανόνες μετονομασίας (IntVar_1, StrVar_2, etc.)
-   - Ανιχνεύει nested IF depth > 3
-   - Προσθέτει warning comments
-   - LLM receives: system prompt + user code
-   - Applies renaming rules (IntVar_1, StrVar_2, etc.)
-   - Detects nested IF depth > 3
-   - Adds warning comments
-
-4. **Έξοδος / Output**
-   - Επιστρέφει βελτιστοποιημένο κώδικα
-   - Αναλυτική αναφορά αλλαγών
-   - Returns optimized code
-   - Detailed analysis report
-
-#### Πού να Επεξεργαστείτε το System Prompt / Where to Edit System Prompt
-
-**Αρχείο Επεξεργασίας / Edit File:** `partB/systemPrompt.txt`
-
-**Αρχείο που Χρησιμοποιείται / Used File:** `partB/systemPrompt.pdf`
-
-**Βήματα για Αλλαγή / Steps to Change:**
-
-1. **Επεξεργαστείτε το txt αρχείο:**
-
-   ```bash
-   # Ανοίξτε με οποιονδήποτε text editor
-   # Open with any text editor
-   nano partB/systemPrompt.txt
-   # ή / or
-   code partB/systemPrompt.txt
-   ```
-
-2. **Αλλάξτε τους κανόνες όπως θέλετε:**
-   - Κανόνες μετονομασίας μεταβλητών
-   - Όριο βάθους nested IF
-   - Οποιεσδήποτε άλλες οδηγίες βελτιστοποίησης
-   - Variable renaming rules
-   - Nested IF depth limit
-   - Any other optimization guidelines
-
-3. **Δημιουργήστε το PDF:**
-
-   ```bash
-   cd partB
-   python create_system_prompt_pdf.py
-   ```
-
-4. **Επαλήθευση / Verification:**
-
-   ```bash
-   # Το PDF ενημερώθηκε / PDF updated
-   ls -lh partB/systemPrompt.pdf
-   ```
-
-**Δομή του System Prompt / System Prompt Structure:**
-
-```text
-TASK: Python Code Optimization
-
-RULES:
-1. Variable Renaming
-   - int/float types → IntVar_N
-   - str types → StrVar_N
-   - list types → ListVar_N
-   - dict types → DictVar_N
-   - etc.
-
-2. Nested IF Detection
-   - Check maximum nesting depth
-   - If depth > 3, add warning comment
-   - Format: # WARNING: Nested IF depth = X (exceeds limit of 3)
-
-3. Output Format
-   - Return only the optimized code
-   - Preserve all functionality
-   - Add comments for warnings
-```
-
-#### Πώς Λειτουργεί η Βελτιστοποίηση / How Optimization Works
-
-1. **Initialization (Αρχικοποίηση):**
-   - Στην εκκίνηση, το `CodeOptimizer` φορτώνει το `systemPrompt.pdf`
-   - Το κρατάει στη μνήμη για όλες τις βελτιστοποιήσεις
-   - On startup, `CodeOptimizer` loads `systemPrompt.pdf`
-   - Keeps it in memory for all optimizations
-
-2. **Processing (Επεξεργασία):**
-   - User code + system prompt → LLM
-   - Το LLM αναλύει τον κώδικα με AST-like logic
-   - Εφαρμόζει transformations σύμφωνα με τους κανόνες
-   - LLM analyzes code with AST-like logic
-   - Applies transformations according to rules
-
-3. **Validation (Επικύρωση):**
-   - Έλεγχος syntax errors
-   - Επιβεβαίωση ότι ο κώδικας είναι executable
-   - Check syntax errors
-   - Confirm code is executable
-
----
-
-### 🎯 Τεχνικές Λεπτομέρειες / Technical Details
-
-#### Control Flow Graph (CFG)
-
-**Τι Δείχνει / What it Shows:**
-- Κόμβοι: Entry, Statements, Conditions, Return
-- Ακμές: Ροή εκτέλεσης (True/False branches)
-- Nodes: Entry, Statements, Conditions, Return
-- Edges: Execution flow (True/False branches)
-
-**Πώς Δημιουργείται / How it's Generated:**
-
-1. Parsing του κώδικα με AST
-2. Ανίχνευση control structures (if/while/for)
-3. Δημιουργία γράφου με Graphviz
-4. Χρωματική κωδικοποίηση κόμβων
-
-**Χρώματα / Colors:**
-- 🟢 Green: Entry point
-- 🟡 Yellow: Conditional statements
-- 🔵 Blue: Regular statements
-- 🔴 Red: Return statements
-
-#### Data Flow Graph (DFG)
-
-**Τι Δείχνει / What it Shows:**
-- Μεταβλητές και οι εξαρτήσεις τους
-- Ροή δεδομένων μεταξύ μεταβλητών
-- Variables and their dependencies
-- Data flow between variables
-
-**Πώς Δημιουργείται / How it's Generated:**
-
-1. AST analysis για variable definitions & uses
-2. Tracking data dependencies
-3. Ένας κόμβος ανά μεταβλητή (όχι ανά χρήση)
-4. Βέλη δείχνουν εξαρτήσεις
-5. One node per variable (not per use)
-6. Arrows show dependencies
-
-**Χρώματα / Colors:**
-- 🟡 Gold: Input parameters
-- 🔵 Sky Blue: Local variables
-- 🟢 Pale Green: Loop variables
-- 🌸 Pink: Return values
-
-#### Session Management
-
-**Δομή Session / Session Structure:**
-
-```json
 {
-  "session_id": "session_20251130_013518_458713",
-  "created_at": "2025-11-30T01:35:18",
-  "conversations": [
-    {
-      "type": "code_generation",
-      "prompt": "User prompt",
-      "response": "Generated code",
-      "artifacts": {
-        "cfg_paths": {...},
-        "dfg_paths": {...}
-      }
+    "name": "respond",
+    "parameters": {
+        "chat_reply": "Conversational response",
+        "generated_code": "Python code (optional)",
+        "cfg_dot": "Control Flow Graph in DOT format",
+        "dfg_dot": "Data Flow Graph in DOT format"
     }
-  ]
 }
 ```
 
-**Αποθήκευση / Storage:**
-- Κάθε session αποθηκεύεται στο `sessions/`
-- JSON format με όλη την ιστορία
-- Artifacts με absolute paths
-- Each session saved in `sessions/`
-- JSON format with full history
-- Artifacts with absolute paths
+#### **InMemoryRAG (`partA/rag_system.py`)**
+
+**Purpose**: Semantic search over knowledge base using OpenAI embeddings.
+
+**Key Methods:**
+
+1. **`__init__()`**
+   - Sets paths to `knowledge_base/functions.txt` and `embeddings.json`
+   - Initializes OpenAI client
+   - Uses `text-embedding-3-small` model
+
+2. **`initialize()`**
+   - Loads text chunks from knowledge base
+   - Generates or loads cached embeddings
+
+3. **`_load_chunks()`**
+   - Reads `functions.txt`
+   - Splits by `---` delimiter
+   - Filters chunks with minimum 20 characters
+
+4. **`_generate_embeddings()`**
+   - Computes SHA256 hash of knowledge base
+   - Loads cached embeddings if hash matches (avoids redundant API calls)
+   - Generates new embeddings via OpenAI API if needed
+   - Caches embeddings with hash for validation
+
+5. **`_compute_kb_hash() -> str`**
+   - Computes SHA256 hash of knowledge base file
+   - Used for cache invalidation
+
+6. **`retrieve_relevant_embeddings(query, top_k=3) -> List[Dict]`**
+   - Embeds user query using OpenAI
+   - Computes cosine similarity with all knowledge base chunks
+   - Returns top-k most relevant chunks with scores
+
+**Embedding Cache Structure:**
+```json
+{
+  "chunks": ["chunk1", "chunk2", ...],
+  "embeddings": [[0.1, 0.2, ...], [0.3, 0.4, ...]],
+  "model": "text-embedding-3-small",
+  "kb_hash": "sha256_hash_of_functions.txt"
+}
+```
+
+#### **Knowledge Base (`partA/knowledge_base/functions.txt`)**
+
+Contains function specifications in structured format:
+```
+## Function: calculate_order_total
+### Description
+Calculates the final total cost...
+### Input
+* **subtotal (float):** The sum of prices...
+* **is_member (boolean):** Indicates if...
+### Process
+1. Initialize `discount_rate` to 0.0.
+2. Check if `subtotal` is greater than 100.0.
+   * If yes, set `discount_rate` to 0.10
+...
+### Output
+* **final_total (float):** The final amount...
+---
+## Function: next_function
+...
+```
 
 ---
 
-### 📂 Δομή Αρχείων / File Structure
+### Part B: Code Optimizer
 
-```text
-GenerativeAI/
-├── partA/                          # Code Generation Components
-│   ├── knowledge_base/
-│   │   ├── functions.txt          # ⭐ Προσθέστε RAG examples εδώ
-│   │   └── embeddings.json        # Auto-generated vectors
-│   ├── rag_system.py              # RAG implementation
-│   ├── llm_agent.py               # LLM with function calling
-│   ├── cfg_generator.py           # CFG creation
-│   └── dfg_generator.py           # DFG creation
-│
-├── partB/                          # Code Optimization Components
-│   ├── systemPrompt.txt           # ⭐ Επεξεργαστείτε κανόνες εδώ
-│   ├── systemPrompt.pdf           # Used by optimizer (auto-generated)
-│   ├── create_system_prompt_pdf.py  # txt → pdf converter
-│   ├── optimizer.py               # Main optimization logic
-│   └── README.md                  # System prompt documentation
-│
-├── generated_artifacts/            # Generated files
-│   ├── cfg/                       # Control Flow Graphs
-│   │   ├── .gitkeep
-│   │   └── *.png                  # Timestamped CFG images
-│   └── dfg/                       # Data Flow Graphs
-│       ├── .gitkeep
-│       └── *.png                  # Timestamped DFG images
-│
-├── sessions/                       # Session history
-│   ├── .gitkeep
-│   └── session_*.json             # Conversation logs
-│
-├── main.py                        # Main orchestrator
-├── streamlit_app.py               # Web UI
-├── requirements.txt               # Python dependencies
-├── .env                           # ⭐ OPENAI_API_KEY εδώ
-└── README.md                      # This file
-```
+#### **CodeOptimizer (`partB/optimizer.py`)**
 
-**Σημαντικά Αρχεία για Διαμόρφωση / Important Files for Configuration:**
+**Purpose**: Analyzes and optimizes Python code using LLM guidance.
 
-| Αρχείο / File | Σκοπός / Purpose | Πότε να το Αλλάξετε / When to Change |
-|---------------|------------------|--------------------------------------|
-| `partA/knowledge_base/functions.txt` | RAG examples | Προσθήκη νέων παραδειγμάτων κώδικα / Add new code examples |
-| `partB/systemPrompt.txt` | Optimization rules | Αλλαγή κανόνων βελτιστοποίησης / Change optimization rules |
-| `.env` | API keys | Setup / Αρχική διαμόρφωση |
-| `requirements.txt` | Dependencies | Προσθήκη νέων βιβλιοθηκών / Add new libraries |
+**Key Methods:**
+
+1. **`__init__(model="o4-mini")`**
+   - Initializes OpenAI client
+   - Loads system prompt from PDF
+
+2. **`_load_system_prompt() -> str`**
+   - Reads `systemPrompt.pdf` using PyPDF2
+   - Extracts text from all pages
+   - Returns concatenated prompt
+
+3. **`optimize_code(code) -> Dict`**
+   - Sends code to OpenAI with optimization instructions
+   - Strips markdown code fences from response
+   - Returns dictionary with `original_code`, `optimized_code`, `success`, `error`
+
+**System Prompt (`partB/systemPrompt.pdf`):**
+- Instructs LLM to detect nested IF statements (4+ levels)
+- Adds `WARNING:` comments to problematic patterns
+- Suggests improvements (guard clauses, early returns, etc.)
 
 ---
 
-## Features
+## ⚙️ How It Works | Πώς Λειτουργεί
 
-### Code Generation (Part A)
-- ✅ Natural language to Python code
-- ✅ RAG-enhanced context retrieval
-- ✅ Automatic CFG generation
-- ✅ Automatic DFG generation
-- ✅ Code validation with AST
-- ✅ Conversation history tracking
+### Code Generation Flow (Part A) | Ροή Δημιουργίας Κώδικα (Μέρος Α)
 
-### Code Optimization (Part B)
-- ✅ Type-based variable renaming
-- ✅ Nested IF detection (max depth: 3)
-- ✅ Code annotation with warnings
-- ✅ Detailed optimization reports
+**English:**
 
-## Output Artifacts
+1. **User Input**: User types a natural language request (e.g., "create a function that checks cart total")
 
-### Generated Files
-- `generated_artifacts/cfg/` - Control Flow Graph images
-- `generated_artifacts/dfg/` - Data Flow Graph images
-- `sessions/` - Session JSON files with conversation history
+2. **RAG Retrieval**:
+   - Query is embedded using OpenAI embeddings
+   - Cosine similarity computed against knowledge base
+   - Top 3 most relevant chunks retrieved
 
-### Session Data
-Each session stores:
-- Conversation history
-- Generated codes
-- Timestamps
-- Artifacts metadata
+3. **System Prompt Construction**:
+   - RAG context formatted with similarity scores
+   - Instructions added to follow specifications if relevant (score > 0.5)
 
-## Technology Stack
+4. **LLM Function Calling**:
+   - OpenAI API called with `tool_choice` forcing `respond` function
+   - LLM returns structured JSON with `chat_reply`, `generated_code`, `cfg_dot`, `dfg_dot`
 
-### AI/ML
-- OpenAI API (o4-mini for generation, text-embedding-3-small for embeddings)
-- NumPy for vector operations
-- scikit-learn for cosine similarity
+5. **Diagram Rendering**:
+   - DOT strings converted to PNG using Graphviz
+   - Files saved to `diagrams/` with timestamps
 
-### Static Analysis
-- ast module for Python parsing
-- staticfg for control flow analysis
-- NetworkX for data flow graphs
+6. **Response Display**:
+   - Streamlit displays chat reply, code, and diagrams in 3 columns
 
-### Visualization
-- graphviz for CFG rendering
-- matplotlib for DFG rendering
+**Ελληνικά:**
 
-### Dependencies
-```
-openai>=1.0.0
-numpy>=1.24.0
-scikit-learn>=1.3.0
-python-dotenv>=1.0.0
-staticfg>=0.1.0
-graphviz>=0.20.0
-networkx>=3.0
-matplotlib>=3.5.0
-```
+1. **Είσοδος Χρήστη**: Ο χρήστης πληκτρολογεί ένα αίτημα σε φυσική γλώσσα (π.χ., "δημιούργησε μια συνάρτηση που ελέγχει το σύνολο του καλαθιού")
 
-## Example Workflow
+2. **Ανάκτηση RAG**:
+   - Το ερώτημα ενσωματώνεται χρησιμοποιώντας embeddings του OpenAI
+   - Υπολογίζεται η ομοιότητα συνημιτόνου με τη βάση γνώσης
+   - Ανακτώνται τα 3 πιο σχετικά τμήματα
 
-### Part A: Generate Code
-1. User provides description: "Create a function to calculate the nth Fibonacci number"
-2. System retrieves similar functions from knowledge base (RAG)
-3. Generates optimized Python code with documentation
-4. Creates CFG showing control flow
-5. Creates DFG showing data dependencies
-6. Saves all artifacts and conversation
+3. **Κατασκευή System Prompt**:
+   - Το πλαίσιο RAG μορφοποιείται με βαθμολογίες ομοιότητας
+   - Προστίθενται οδηγίες για ακολούθηση προδιαγραφών εάν είναι σχετικές (score > 0.5)
 
-### Part B: Optimize Code
-1. User provides Python code
-2. System infers variable types
-3. Renames variables according to convention
-4. Detects nested IF statements
-5. Annotates code with warnings
-6. Returns optimized code with report
+4. **Κλήση Συνάρτησης LLM**:
+   - Καλείται το API του OpenAI με `tool_choice` που επιβάλλει τη συνάρτηση `respond`
+   - Το LLM επιστρέφει δομημένο JSON με `chat_reply`, `generated_code`, `cfg_dot`, `dfg_dot`
 
-## Test Results
+5. **Απόδοση Διαγραμμάτων**:
+   - Τα strings DOT μετατρέπονται σε PNG χρησιμοποιώντας Graphviz
+   - Τα αρχεία αποθηκεύονται στο `diagrams/` με χρονικές σημάνσεις
 
-### Demo Execution
-✅ Successfully initialized all components
-✅ Generated Fibonacci function with full documentation
-✅ Retrieved 3 relevant context functions from RAG
-✅ Created CFG: `fibonacci.png`
-✅ Created DFG: `fibonacci_dfg.png`
-✅ Renamed 4 variables in test code
-✅ Detected 1 nested IF violation (depth=4)
-✅ Session saved with complete history
+6. **Προβολή Απάντησης**:
+   - Το Streamlit εμφανίζει την απάντηση συνομιλίας, τον κώδικα και τα διαγράμματα σε 3 στήλες
 
-## Project Structure
-```
-GenerativeAI/
-├── partA/
-│   ├── knowledge_base/
-│   │   ├── functions.txt
-│   │   └── embeddings.json
-│   ├── rag_system.py
-│   ├── code_generator.py
-│   ├── cfg_generator.py
-│   └── dfg_generator.py
-├── partB/
-│   ├── var_renamer.py
-│   └── if_detector.py
-├── main.py
-├── demo.py
-├── requirements.txt
-├── .env
-├── generated_artifacts/
-│   ├── cfg/
-│   └── dfg/
-└── sessions/
+### Code Optimization Flow (Part B) | Ροή Βελτιστοποίησης Κώδικα (Μέρος Β)
+
+**English:**
+
+1. **User Input**: User pastes code into text area
+
+2. **Prompt Construction**:
+   - System prompt loaded from PDF
+   - User code appended to optimization request
+
+3. **LLM Analysis**:
+   - OpenAI analyzes code structure
+   - Detects nested IF statements (4+ levels)
+   - Suggests optimizations
+
+4. **Response Processing**:
+   - Markdown code fences removed
+   - Optimized code displayed alongside original
+
+**Ελληνικά:**
+
+1. **Είσοδος Χρήστη**: Ο χρήστης επικολλά κώδικα στην περιοχή κειμένου
+
+2. **Κατασκευή Prompt**:
+   - Το system prompt φορτώνεται από PDF
+   - Ο κώδικας του χρήστη προστίθεται στο αίτημα βελτιστοποίησης
+
+3. **Ανάλυση LLM**:
+   - Το OpenAI αναλύει τη δομή του κώδικα
+   - Ανιχνεύει εμφωλευμένες δηλώσεις IF (4+ επίπεδα)
+   - Προτείνει βελτιστοποιήσεις
+
+4. **Επεξεργασία Απάντησης**:
+   - Αφαιρούνται τα code fences markdown
+   - Ο βελτιστοποιημένος κώδικας εμφανίζεται δίπλα στον αρχικό
+
+---
+
+## 🔧 Configuration | Διαμόρφωση
+
+### Environment Variables (`.env`)
+```bash
+OPENAI_API_KEY=sk-...  # Your OpenAI API key
 ```
 
-## Success Metrics
-- ✅ All components functional and tested
-- ✅ End-to-end pipeline working
-- ✅ Proper error handling and logging
-- ✅ Session persistence working
-- ✅ Artifact generation successful
-- ✅ Code validation passing
-- ✅ Type inference accurate
-- ✅ Graph visualization working
+### Model Configuration
+Change the model in `streamlit_app.py`:
+```python
+st.session_state.agent = LLMAgent(model="gpt-4")  # Default: o4-mini
+st.session_state.optimizer = CodeOptimizer(model="gpt-4")
+```
 
-## Future Enhancements
-- Add FastAPI REST API endpoints
-- Create Streamlit web UI
-- PDF optimization guide integration
-- Batch file processing
-- Code complexity metrics
-- Performance profiling integration
+### RAG Configuration
+Edit `partA/rag_system.py`:
+```python
+self.model = "text-embedding-3-large"  # Default: text-embedding-3-small
+```
+
+Change top-k results in `partA/llm_agent.py`:
+```python
+relevant = self.rag_system.retrieve_relevant_embeddings(user_message, top_k=5)  # Default: 3
+```
+
+### Logging
+Adjust logging levels in respective files:
+```python
+logging.getLogger("openai").setLevel(logging.DEBUG)  # INFO, WARNING, ERROR
+```
+
+---
+
+## 📝 Additional Notes | Επιπλέον Σημειώσεις
+
+### Cached Embeddings | Cached Ενσωματώσεις
+
+**English:**
+
+- Embeddings are automatically cached in `partA/knowledge_base/embeddings.json`
+- Cache is invalidated when `functions.txt` is modified (SHA256 hash check)
+- Reduces API calls and improves response time
+
+**Ελληνικά:**
+
+- Οι ενσωματώσεις (embeddings) αποθηκεύονται αυτόματα στο `partA/knowledge_base/embeddings.json`
+- Η cache ακυρώνεται όταν τροποποιείται το `functions.txt` (έλεγχος hash SHA256)
+- Μειώνει τις κλήσεις API και βελτιώνει τον χρόνο απόκρισης
+
+### Diagram Storage | Αποθήκευση Διαγραμμάτων
+
+**English:**
+
+- Diagrams saved to `diagrams/` (git-ignored)
+- Timestamped filenames prevent overwrites: `cfg_20251205_143022.png`
+
+**Ελληνικά:**
+
+- Τα διαγράμματα αποθηκεύονται στο `diagrams/` (αγνοείται από git)
+- Τα ονόματα αρχείων με χρονικές σημάνσεις αποτρέπουν αντικαταστάσεις: `cfg_20251205_143022.png`
+
+### Sessions | Συνεδρίες
+
+**English:**
+
+- Conversation history stored in Streamlit session state (memory only)
+- `sessions/` folder exists for potential persistence but is not currently used
+
+**Ελληνικά:**
+
+- Το ιστορικό συνομιλίας αποθηκεύεται στην κατάσταση συνεδρίας του Streamlit (μόνο στη μνήμη)
+- Ο φάκελος `sessions/` υπάρχει για πιθανή διατήρηση αλλά δεν χρησιμοποιείται προς το παρόν
+
+---
+
+## 🛠️ Troubleshooting | Αντιμετώπιση Προβλημάτων
+
+### "Graphviz executable not found"
+
+**English:** Install system-level Graphviz (see Setup Instructions)
+
+**Ελληνικά:** Εγκαταστήστε το Graphviz σε επίπεδο συστήματος (δείτε Οδηγίες Εγκατάστασης)
+
+### "No embeddings.json found"
+
+**English:** RAG system will automatically generate embeddings on first run
+
+**Ελληνικά:** Το σύστημα RAG θα δημιουργήσει αυτόματα embeddings στην πρώτη εκτέλεση
+
+### API Rate Limits | Όρια Ρυθμού API
+
+**English:** Adjust request frequency or upgrade OpenAI plan
+
+**Ελληνικά:** Προσαρμόστε τη συχνότητα αιτημάτων ή αναβαθμίστε το πλάνο OpenAI
+
+### "Module not found" errors | Σφάλματα "Module not found"
+
+**English:** Ensure virtual environment is activated and dependencies installed
+
+**Ελληνικά:** Βεβαιωθείτε ότι το εικονικό περιβάλλον είναι ενεργοποιημένο και οι εξαρτήσεις εγκατεστημένες
+
+---
+
+## 📄 License
+
+This project is for educational purposes.
+
+---
+
+## 🤝 Contributing
+
+This is a course project. For questions, contact the repository owner.

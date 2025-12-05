@@ -39,11 +39,11 @@ if condition1:
                 do_something()
 
 # Optimized output:
-if Var_1:
-    if Var_2:
-        if Var_3:
+if condition1:
+    if condition2:
+        if condition3:
             # WARNING: Nested IF depth = 4 (exceeds limit of 3)
-            if Var_4:
+            if condition4:
                 do_something()
 ```
 
