@@ -104,10 +104,9 @@ with tab2:
     with col_input:
         st.subheader("📥 Input Code")
         
-        # File uploader
         uploaded_file = st.file_uploader("Upload a Python file (optional):", type=["py"])
-        
-        default_code = '''def check_conditions(x, y, z):
+
+        example_code = '''def check_conditions(x, y, z):
     if x > 0:
         if y > 0:
             if z > 0:
@@ -115,13 +114,20 @@ with tab2:
                     if y > z:
                         return "All positive and descending"
     return "Conditions not met"'''
-        
-        # If file uploaded, use its content, otherwise use text area value
+
         if uploaded_file is not None:
             input_code = uploaded_file.read().decode("utf-8")
             st.text_area("Uploaded code:", value=input_code, height=400, disabled=True)
         else:
-            input_code = st.text_area("Or paste your Python code:", value=default_code, height=400)
+            input_code = st.text_area(
+                "Or paste your Python code:",
+                value="",
+                height=400,
+                placeholder="Paste your Python code here...",
+            )
+
+        with st.expander("Show example of problematic code (nested if > 3 levels)"):
+            st.code(example_code, language="python")
         
         if st.button("⚡ Optimize Code", type="primary", use_container_width=True):
             if input_code.strip():
@@ -134,7 +140,12 @@ with tab2:
         if result:
             if result["success"]:
                 st.code(result["optimized_code"], language="python")
-                st.download_button("📥 Download", result["optimized_code"], "optimized_code.py", use_container_width=True)
+                st.download_button(
+                    "📥 Download",
+                    result["optimized_code"],
+                    "optimized_code.py",
+                    use_container_width=True
+                )
             else:
                 st.error(f"Optimization failed: {result['error']}")
         else:

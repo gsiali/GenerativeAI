@@ -71,6 +71,11 @@ class InMemoryRAG:
         return [{"text": self.chunks[idx], "score": float(similarities[idx]), "rank": i} 
                 for i, idx in enumerate(top_indices, 1)]
     
+    def retrieve_relevant_embeddings(self, query: str, top_k: int = 3):
+        
+        return self.retrieve_relevant_functions(query, top_k=top_k)
+
+    
     def initialize(self):
         self._load_chunks()
         self._generate_embeddings()
