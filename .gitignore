@@ -35,3 +35,6 @@ ENV/
 sessions/*
 !sessions/.gitkeep
 diagrams/
+
+
+**/embeddings.json
